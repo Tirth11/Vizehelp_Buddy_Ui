@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "Vizehelp Buddy",
+    "slug": "vizehelp-buddy",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#4A90D9"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.vizehelp.buddy"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#4A90D9"
+      },
+      "package": "com.vizehelp.buddy"
+    },
+    "plugins": [
+      "expo-font"
+    ]
+  }
+}
