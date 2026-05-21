@@ -6,7 +6,6 @@ export default function EmergencyContactScreen({ navigation }) {
   const [form, setForm] = useState({ name: '', relationship: '', mobile: '', alternate: '' });
 
   const handleSave = () => {
-    if (!form.name || !form.mobile) return Alert.alert('Error', 'Name and mobile are required');
     navigation.navigate('SelectServices');
   };
 

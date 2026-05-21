@@ -18,10 +18,6 @@ export default function LoginOTPScreen({ navigation, route }) {
   }, []);
 
   const handleVerify = () => {
-    if (otp.length < 4) {
-      Alert.alert('Error', 'Please enter valid OTP');
-      return;
-    }
     dispatch({ type: 'LOGIN', payload: MOCK_USER });
     navigation.reset({ index: 0, routes: [{ name: 'MainTabs' }] });
   };
@@ -29,7 +25,7 @@ export default function LoginOTPScreen({ navigation, route }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Verify OTP</Text>
-      <Text style={styles.subtitle}>Enter OTP sent to +91 {mobile}</Text>
+      <Text style={styles.subtitle}>Enter OTP sent to +1 {mobile}</Text>
 
       <TextInput
         style={styles.otpInput}

@@ -32,7 +32,7 @@ export default function CancelJobScreen({ navigation, route }) {
 
       <View style={styles.penaltyBox}>
         <Text style={styles.penaltyLabel}>Penalty:</Text>
-        <Text style={styles.penaltyValue}>₹50 deduction may apply</Text>
+        <Text style={styles.penaltyValue}>$50 deduction may apply</Text>
       </View>
 
       <TouchableOpacity style={[styles.btn, !reason && styles.btnDisabled]} onPress={handleCancel}>

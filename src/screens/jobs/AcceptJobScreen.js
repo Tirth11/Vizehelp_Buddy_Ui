@@ -18,7 +18,7 @@ export default function AcceptJobScreen({ navigation, route }) {
 
       <View style={styles.infoBox}>
         <Text style={styles.infoText}>{job?.type} • {job?.location}</Text>
-        <Text style={styles.earning}>₹{job?.earning}</Text>
+        <Text style={styles.earning}>${job?.earning}</Text>
       </View>
 
       <Text style={styles.note}>Once accepted, you should not receive another overlapping job.</Text>

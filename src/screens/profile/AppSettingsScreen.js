@@ -19,7 +19,7 @@ export default function AppSettingsScreen({ navigation }) {
 
       <Text style={styles.sectionTitle}>Language</Text>
       <View style={styles.langRow}>
-        {['English', 'Hindi', 'Kannada', 'Tamil'].map(l => (
+        {['English', 'Spanish', 'French', 'Chinese'].map(l => (
           <TouchableOpacity key={l} style={[styles.langChip, language === l && styles.langActive]} onPress={() => setLanguage(l)}>
             <Text style={[styles.langText, language === l && styles.langTextActive]}>{l}</Text>
           </TouchableOpacity>

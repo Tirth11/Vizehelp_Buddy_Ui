@@ -7,24 +7,8 @@ import { COLORS } from '../constants/theme';
 
 // Auth
 import SplashScreen from '../screens/auth/SplashScreen';
-import WelcomeScreen from '../screens/auth/WelcomeScreen';
-import LoginScreen from '../screens/auth/LoginScreen';
-import LoginOTPScreen from '../screens/auth/LoginOTPScreen';
 
-// Normal Registration
-import CreateAccountScreen from '../screens/registration/CreateAccountScreen';
-import VerifyMobileScreen from '../screens/registration/VerifyMobileScreen';
-import VerifyEmailScreen from '../screens/registration/VerifyEmailScreen';
-import CompleteProfileScreen from '../screens/registration/CompleteProfileScreen';
-import IdentityVerificationScreen from '../screens/registration/IdentityVerificationScreen';
-import BackgroundCheckScreen from '../screens/registration/BackgroundCheckScreen';
-import SelectServicesScreen from '../screens/registration/SelectServicesScreen';
-import SetServiceAreaScreen from '../screens/registration/SetServiceAreaScreen';
-import SetAvailabilityScreen from '../screens/registration/SetAvailabilityScreen';
-import AddPayoutScreen from '../screens/registration/AddPayoutScreen';
-import SubmitApprovalScreen from '../screens/registration/SubmitApprovalScreen';
-
-// Enterprise Registration
+// Enterprise Login & Registration
 import EnterInviteScreen from '../screens/registration/EnterInviteScreen';
 import OTPVerificationScreen from '../screens/registration/OTPVerificationScreen';
 import TermsConsentScreen from '../screens/registration/TermsConsentScreen';
@@ -36,6 +20,22 @@ import EmergencyContactScreen from '../screens/registration/EmergencyContactScre
 import TrainingStatusScreen from '../screens/registration/TrainingStatusScreen';
 import ApprovalPendingScreen from '../screens/registration/ApprovalPendingScreen';
 import RejectionScreen from '../screens/registration/RejectionScreen';
+import SelectServicesScreen from '../screens/registration/SelectServicesScreen';
+import SetServiceAreaScreen from '../screens/registration/SetServiceAreaScreen';
+import SetAvailabilityScreen from '../screens/registration/SetAvailabilityScreen';
+import AddPayoutScreen from '../screens/registration/AddPayoutScreen';
+import SubmitApprovalScreen from '../screens/registration/SubmitApprovalScreen';
+import CreateAccountScreen from '../screens/registration/CreateAccountScreen';
+import VerifyMobileScreen from '../screens/registration/VerifyMobileScreen';
+import VerifyEmailScreen from '../screens/registration/VerifyEmailScreen';
+import CompleteProfileScreen from '../screens/registration/CompleteProfileScreen';
+import IdentityVerificationScreen from '../screens/registration/IdentityVerificationScreen';
+import BackgroundCheckScreen from '../screens/registration/BackgroundCheckScreen';
+
+// Auth (additional)
+import WelcomeScreen from '../screens/auth/WelcomeScreen';
+import LoginScreen from '../screens/auth/LoginScreen';
+import LoginOTPScreen from '../screens/auth/LoginOTPScreen';
 
 // Main
 import HomeScreen from '../screens/main/HomeScreen';
@@ -103,6 +103,7 @@ import ServiceChecklistScreen from '../screens/service/ServiceChecklistScreen';
 import MaterialRequirementScreen from '../screens/service/MaterialRequirementScreen';
 import ServiceExtensionScreen from '../screens/service/ServiceExtensionScreen';
 import CustomerRatingScreen from '../screens/service/CustomerRatingScreen';
+import ReferenceUIScreen from '../screens/ReferenceUIScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -140,17 +141,27 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {/* Auth */}
+        {/* Splash */}
         <Stack.Screen name="Splash" component={SplashScreen} />
+
+        {/* Enterprise Login Flow */}
+        <Stack.Screen name="EnterInvite" component={EnterInviteScreen} />
+        <Stack.Screen name="OTPVerification" component={OTPVerificationScreen} />
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="LoginOTP" component={LoginOTPScreen} />
 
-        {/* Normal Registration */}
+        {/* New Buddy Registration Flow */}
         <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
         <Stack.Screen name="VerifyMobile" component={VerifyMobileScreen} />
         <Stack.Screen name="VerifyEmail" component={VerifyEmailScreen} />
         <Stack.Screen name="CompleteProfile" component={CompleteProfileScreen} />
+        <Stack.Screen name="TermsConsent" component={TermsConsentScreen} />
+        <Stack.Screen name="BasicProfile" component={BasicProfileScreen} />
+        <Stack.Screen name="AddressDetails" component={AddressDetailsScreen} />
+        <Stack.Screen name="KYCUpload" component={KYCUploadScreen} />
+        <Stack.Screen name="BankDetails" component={BankDetailsScreen} />
+        <Stack.Screen name="EmergencyContact" component={EmergencyContactScreen} />
         <Stack.Screen name="IdentityVerification" component={IdentityVerificationScreen} />
         <Stack.Screen name="BackgroundCheck" component={BackgroundCheckScreen} />
         <Stack.Screen name="SelectServices" component={SelectServicesScreen} />
@@ -158,16 +169,6 @@ export default function AppNavigator() {
         <Stack.Screen name="SetAvailability" component={SetAvailabilityScreen} />
         <Stack.Screen name="AddPayout" component={AddPayoutScreen} />
         <Stack.Screen name="SubmitApproval" component={SubmitApprovalScreen} />
-
-        {/* Enterprise Registration */}
-        <Stack.Screen name="EnterInvite" component={EnterInviteScreen} />
-        <Stack.Screen name="OTPVerification" component={OTPVerificationScreen} />
-        <Stack.Screen name="TermsConsent" component={TermsConsentScreen} />
-        <Stack.Screen name="BasicProfile" component={BasicProfileScreen} />
-        <Stack.Screen name="AddressDetails" component={AddressDetailsScreen} />
-        <Stack.Screen name="KYCUpload" component={KYCUploadScreen} />
-        <Stack.Screen name="BankDetails" component={BankDetailsScreen} />
-        <Stack.Screen name="EmergencyContact" component={EmergencyContactScreen} />
         <Stack.Screen name="TrainingStatus" component={TrainingStatusScreen} />
         <Stack.Screen name="ApprovalPending" component={ApprovalPendingScreen} />
         <Stack.Screen name="Rejection" component={RejectionScreen} />
@@ -237,6 +238,7 @@ export default function AppNavigator() {
         <Stack.Screen name="MaterialRequirement" component={MaterialRequirementScreen} />
         <Stack.Screen name="ServiceExtension" component={ServiceExtensionScreen} />
         <Stack.Screen name="CustomerRating" component={CustomerRatingScreen} />
+        <Stack.Screen name="ReferenceUI" component={ReferenceUIScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

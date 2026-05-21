@@ -39,7 +39,7 @@ export default function DeclineJobScreen({ navigation }) {
         <TextInput style={styles.input} value={notes} onChangeText={setNotes} placeholder="Tell us more..." multiline placeholderTextColor={COLORS.textLight} />
       )}
 
-      <TouchableOpacity style={[styles.btn, !selected && styles.btnDisabled]} disabled={!selected} onPress={() => navigation.navigate('AvailableJobs')}>
+      <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('AvailableJobs')}>
         <Text style={styles.btnText}>Submit & Return to Jobs</Text>
       </TouchableOpacity>
     </View>

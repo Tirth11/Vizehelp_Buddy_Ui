@@ -24,7 +24,7 @@ export default function ServiceExtensionScreen({ navigation }) {
       <TextInput style={styles.input} placeholder="e.g., 30 minutes" value={time} onChangeText={setTime} />
 
       <Text style={styles.label}>Additional Charges (if applicable)</Text>
-      <TextInput style={styles.input} placeholder="₹0" keyboardType="number-pad" value={charges} onChangeText={setCharges} />
+      <TextInput style={styles.input} placeholder="$0" keyboardType="number-pad" value={charges} onChangeText={setCharges} />
 
       <View style={styles.noteBox}>
         <Text style={styles.noteText}>⚠️ Customer approval is required for additional charges.</Text>

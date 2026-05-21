@@ -45,7 +45,7 @@ export default function CompletionChecklistScreen({ navigation, route }) {
       <Text style={styles.sectionTitle}>Customer Remarks (Optional)</Text>
       <TextInput style={styles.notesInput} placeholder="Add notes..." multiline value={notes} onChangeText={setNotes} />
 
-      <TouchableOpacity style={[styles.btn, !mandatoryDone && styles.btnDisabled]} onPress={() => navigation.navigate('ProofUpload', { job })}>
+      <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('ProofUpload', { job })}>
         <Text style={styles.btnText}>Proceed to Completion</Text>
       </TouchableOpacity>
     </ScrollView>

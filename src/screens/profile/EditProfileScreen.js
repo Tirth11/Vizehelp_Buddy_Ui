@@ -25,7 +25,7 @@ export default function EditProfileScreen({ navigation }) {
 
       <Text style={styles.label}>Language Preference</Text>
       <View style={styles.row}>
-        {['English', 'Hindi', 'Kannada'].map(l => (
+        {['English', 'Spanish', 'French'].map(l => (
           <TouchableOpacity key={l} style={[styles.chip, form.language === l && styles.chipActive]} onPress={() => setForm({ ...form, language: l })}>
             <Text style={[styles.chipText, form.language === l && styles.chipTextActive]}>{l}</Text>
           </TouchableOpacity>

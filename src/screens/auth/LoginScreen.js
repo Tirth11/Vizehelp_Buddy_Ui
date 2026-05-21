@@ -6,11 +6,7 @@ export default function LoginScreen({ navigation }) {
   const [mobile, setMobile] = useState('');
 
   const handleSendOTP = () => {
-    if (mobile.length < 10) {
-      Alert.alert('Error', 'Please enter a valid mobile number');
-      return;
-    }
-    navigation.navigate('LoginOTP', { mobile });
+    navigation.navigate('LoginOTP', { mobile: mobile || '9999999999' });
   };
 
   return (
@@ -19,7 +15,7 @@ export default function LoginScreen({ navigation }) {
       <Text style={styles.subtitle}>Enter your registered mobile number</Text>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.prefix}>+91</Text>
+        <Text style={styles.prefix}>+1</Text>
         <TextInput
           style={styles.input}
           placeholder="Mobile Number"

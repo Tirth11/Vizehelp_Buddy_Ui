@@ -20,7 +20,7 @@ export default function CompletedJobDetailScreen({ navigation, route }) {
         <Row label="Date/Time" value={job.completedAt || '12:15 PM'} />
         <Row label="Location" value={job.location} />
         <Row label="Customer Rating" value={job.rating ? `${job.rating} ★` : 'Pending'} />
-        <Row label="Earnings" value={`₹${job.earning}`} highlight />
+        <Row label="Earnings" value={`$${job.earning}`} highlight />
       </View>
 
       <View style={styles.section}>

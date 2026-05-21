@@ -42,7 +42,7 @@ export default function SelectServicesScreen({ navigation }) {
         ))}
       </View>
 
-      <TouchableOpacity style={[styles.btn, selected.length === 0 && styles.btnDisabled]} disabled={selected.length === 0} onPress={() => navigation.navigate('SetServiceArea')}>
+      <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('SetServiceArea')}>
         <Text style={styles.btnText}>Continue ({selected.length} selected)</Text>
       </TouchableOpacity>
     </ScrollView>

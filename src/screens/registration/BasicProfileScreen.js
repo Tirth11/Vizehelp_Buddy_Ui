@@ -7,7 +7,6 @@ export default function BasicProfileScreen({ navigation }) {
   const [form, setForm] = useState({ name: '', email: '', dob: '', gender: '' });
 
   const handleContinue = () => {
-    if (!form.name.trim()) return Alert.alert('Error', 'Full name is mandatory');
     navigation.navigate('AddressDetails');
   };
 
@@ -36,7 +35,7 @@ export default function BasicProfileScreen({ navigation }) {
 
       <Text style={styles.label}>Preferred Language</Text>
       <View style={styles.genderRow}>
-        {['English', 'Hindi', 'Kannada'].map(l => (
+        {['English', 'Spanish', 'French'].map(l => (
           <TouchableOpacity key={l} style={[styles.genderBtn, form.language === l && styles.genderActive]} onPress={() => setForm({ ...form, language: l })}>
             <Text style={[styles.genderText, form.language === l && styles.genderTextActive]}>{l}</Text>
           </TouchableOpacity>

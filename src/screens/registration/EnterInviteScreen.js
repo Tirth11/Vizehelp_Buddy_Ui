@@ -1,49 +1,70 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
-import { COLORS, FONTS, SPACING } from '../../constants/theme';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { COLORS, FONTS, SPACING, SHADOWS } from '../../constants/theme';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function EnterInviteScreen({ navigation }) {
-  const [inviteCode, setInviteCode] = useState('');
+  const [enterpriseCode, setEnterpriseCode] = useState('');
   const [mobile, setMobile] = useState('');
 
-  const handleVerify = () => {
-    if (!inviteCode.trim()) return Alert.alert('Error', 'Invite code is mandatory');
-    if (mobile.length < 10) return Alert.alert('Error', 'Enter valid mobile number');
-    navigation.navigate('OTPVerification', { mobile, inviteCode });
+  const handleContinue = () => {
+    navigation.navigate('OTPVerification', { mobile: mobile || '9999999999', enterpriseCode: enterpriseCode || 'DEMO' });
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Register with Enterprise Invite</Text>
-      <Text style={styles.subtitle}>Enter the invite code shared by your enterprise.</Text>
-
-      <TextInput style={styles.input} placeholder="Invite Code" value={inviteCode} onChangeText={setInviteCode} autoCapitalize="characters" />
-
-      <View style={styles.mobileRow}>
-        <Text style={styles.prefix}>+91</Text>
-        <TextInput style={styles.mobileInput} placeholder="Mobile Number" keyboardType="phone-pad" maxLength={10} value={mobile} onChangeText={setMobile} />
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <View style={styles.topSection}>
+        <View style={styles.logo}>
+          <Text style={styles.logoText}>V</Text>
+        </View>
+        <Text style={styles.appName}>VizeHelp Buddy</Text>
+        <Text style={styles.tagline}>Work with your enterprise. Accept jobs.{'\n'}Earn with VizeHelp.</Text>
       </View>
 
-      <TouchableOpacity style={styles.btn} onPress={handleVerify}>
-        <Text style={styles.btnText}>Verify Invite</Text>
-      </TouchableOpacity>
+      <View style={styles.formSection}>
+        <TextInput
+          style={styles.input}
+          placeholder="Enterprise Invite ID"
+          placeholderTextColor={COLORS.gray}
+          value={enterpriseCode}
+          onChangeText={setEnterpriseCode}
+          autoCapitalize="characters"
+        />
 
-      <TouchableOpacity onPress={() => Alert.alert('No Invite?', 'Contact your enterprise admin to get an invite code.')}>
-        <Text style={styles.linkText}>I don't have an invite</Text>
-      </TouchableOpacity>
-    </View>
+        <TextInput
+          style={styles.input}
+          placeholder="Phone Number"
+          placeholderTextColor={COLORS.gray}
+          keyboardType="phone-pad"
+          maxLength={10}
+          value={mobile}
+          onChangeText={setMobile}
+        />
+
+        <TouchableOpacity style={styles.btn} onPress={handleContinue}>
+          <Text style={styles.btnText}>Continue</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.helpBtn} onPress={() => navigation.navigate('Support')}>
+          <Ionicons name="help-circle-outline" size={18} color={COLORS.primary} />
+          <Text style={styles.helpText}>Need Help?</Text>
+        </TouchableOpacity>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: COLORS.white, padding: SPACING.lg, justifyContent: 'center' },
-  title: { ...FONTS.title, marginBottom: SPACING.sm },
-  subtitle: { ...FONTS.regular, color: COLORS.gray, marginBottom: SPACING.xl },
-  input: { borderWidth: 1, borderColor: COLORS.border, borderRadius: 12, padding: SPACING.md, fontSize: 16, marginBottom: SPACING.md },
-  mobileRow: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: COLORS.border, borderRadius: 12, paddingHorizontal: SPACING.md, marginBottom: SPACING.lg },
-  prefix: { fontSize: 16, color: COLORS.text, marginRight: SPACING.sm },
-  mobileInput: { flex: 1, paddingVertical: SPACING.md, fontSize: 16 },
-  btn: { backgroundColor: COLORS.primary, padding: SPACING.md, borderRadius: 12, alignItems: 'center', marginBottom: SPACING.md },
-  btnText: { color: COLORS.white, fontSize: 16, fontWeight: '600' },
-  linkText: { color: COLORS.primary, fontSize: 14, textAlign: 'center', marginTop: SPACING.sm },
+  container: { flex: 1, backgroundColor: COLORS.white },
+  topSection: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: SPACING.xxl },
+  logo: { width: 80, height: 80, borderRadius: 40, backgroundColor: COLORS.primary, justifyContent: 'center', alignItems: 'center', marginBottom: SPACING.md, ...SHADOWS.medium },
+  logoText: { fontSize: 36, fontWeight: '800', color: COLORS.white },
+  appName: { fontSize: 28, fontWeight: '800', color: COLORS.text, letterSpacing: -0.5, marginBottom: SPACING.sm },
+  tagline: { ...FONTS.regular, color: COLORS.gray, textAlign: 'center', lineHeight: 22 },
+  formSection: { paddingHorizontal: SPACING.lg, paddingBottom: SPACING.xxl },
+  input: { backgroundColor: COLORS.lightGray, borderRadius: 12, padding: SPACING.md, fontSize: 16, color: COLORS.text, marginBottom: SPACING.md },
+  btn: { backgroundColor: COLORS.primary, padding: SPACING.md + 2, borderRadius: 12, alignItems: 'center', ...SHADOWS.small },
+  btnText: { color: COLORS.white, fontSize: 16, fontWeight: '700' },
+  helpBtn: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: SPACING.lg, gap: 6 },
+  helpText: { color: COLORS.primary, fontSize: 14, fontWeight: '600' },
 });

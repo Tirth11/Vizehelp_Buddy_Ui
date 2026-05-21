@@ -20,7 +20,7 @@ export default function CancelledJobDetailScreen({ navigation, route }) {
         <Row label="Location" value={job.location} />
         <Row label="Cancellation Reason" value={job.cancelReason || 'N/A'} />
         <Row label="Cancelled By" value="Buddy" />
-        <Row label="Penalty" value="₹50" danger />
+        <Row label="Penalty" value="$50" danger />
       </View>
 
       <TouchableOpacity style={styles.supportBtn} onPress={() => navigation.navigate('Support')}>

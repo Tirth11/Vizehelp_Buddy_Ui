@@ -8,7 +8,11 @@ export default function SplashScreen({ navigation }) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.replace(state.isLoggedIn ? 'MainTabs' : 'Welcome');
+      if (state.isLoggedIn) {
+        navigation.replace('MainTabs');
+      } else {
+        navigation.replace('EnterInvite');
+      }
     }, 2000);
     return () => clearTimeout(timer);
   }, []);

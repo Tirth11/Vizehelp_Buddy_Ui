@@ -42,7 +42,7 @@ export default function JobsListScreen({ navigation }) {
             }}>
               <View style={styles.jobHeader}>
                 <Text style={styles.jobType}>{job.type}</Text>
-                <Text style={styles.jobEarning}>₹{job.earning}</Text>
+                <Text style={styles.jobEarning}>${job.earning}</Text>
               </View>
               <Text style={styles.jobLocation}>{job.location}</Text>
               <View style={styles.jobFooter}>

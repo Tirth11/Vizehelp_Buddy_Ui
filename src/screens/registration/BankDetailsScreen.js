@@ -6,7 +6,6 @@ export default function BankDetailsScreen({ navigation }) {
   const [form, setForm] = useState({ account: '', ifsc: '', holder: '', upi: '' });
 
   const handleSave = () => {
-    if (!form.upi && !form.account) return Alert.alert('Error', 'Enter bank account or UPI ID');
     navigation.navigate('EmergencyContact');
   };
 
@@ -16,7 +15,7 @@ export default function BankDetailsScreen({ navigation }) {
       <Text style={styles.subtitle}>Add your payout details for earnings</Text>
 
       <TextInput style={styles.input} placeholder="Bank Account Number" keyboardType="number-pad" value={form.account} onChangeText={v => setForm({ ...form, account: v })} />
-      <TextInput style={styles.input} placeholder="IFSC Code" autoCapitalize="characters" value={form.ifsc} onChangeText={v => setForm({ ...form, ifsc: v })} />
+      <TextInput style={styles.input} placeholder="Routing Number" value={form.ifsc} onChangeText={v => setForm({ ...form, ifsc: v })} />
       <TextInput style={styles.input} placeholder="Account Holder Name" value={form.holder} onChangeText={v => setForm({ ...form, holder: v })} />
 
       <View style={styles.divider}>
@@ -25,7 +24,7 @@ export default function BankDetailsScreen({ navigation }) {
         <View style={styles.line} />
       </View>
 
-      <TextInput style={styles.input} placeholder="UPI ID (e.g., name@upi)" value={form.upi} onChangeText={v => setForm({ ...form, upi: v })} />
+      <TextInput style={styles.input} placeholder="Zelle / Venmo ID (e.g., email or phone)" value={form.upi} onChangeText={v => setForm({ ...form, upi: v })} />
 
       <TouchableOpacity style={styles.uploadBtn}>
         <Text style={styles.uploadText}>Upload Cancelled Cheque (Optional)</Text>

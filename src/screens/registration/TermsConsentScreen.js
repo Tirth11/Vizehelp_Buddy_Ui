@@ -11,7 +11,6 @@ export default function TermsConsentScreen({ navigation }) {
   const toggle = (key) => setAgreed(prev => ({ ...prev, [key]: !prev[key] }));
 
   const handleContinue = () => {
-    if (!allAgreed) return Alert.alert('Required', 'Please accept all mandatory consents to continue.');
     navigation.navigate('BasicProfile');
   };
 
@@ -44,7 +43,7 @@ export default function TermsConsentScreen({ navigation }) {
         <CheckItem label="I consent to background verification" field="bgCheck" />
       </View>
 
-      <TouchableOpacity style={[styles.btn, !allAgreed && styles.btnDisabled]} onPress={handleContinue}>
+      <TouchableOpacity style={styles.btn} onPress={handleContinue}>
         <Text style={styles.btnText}>Continue</Text>
       </TouchableOpacity>
     </ScrollView>

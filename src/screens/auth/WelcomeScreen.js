@@ -15,18 +15,9 @@ export default function WelcomeScreen({ navigation }) {
       </View>
 
       <View style={styles.buttons}>
-        <TouchableOpacity style={styles.primaryBtn} onPress={() => navigation.navigate('CreateAccount')}>
-          <Ionicons name="person-add-outline" size={20} color={COLORS.white} />
-          <Text style={styles.primaryBtnText}>Register as Vizehelp Buddy</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.secondaryBtn} onPress={() => navigation.navigate('EnterInvite')}>
-          <Ionicons name="business-outline" size={20} color={COLORS.primary} />
-          <Text style={styles.secondaryBtnText}>Join with Enterprise Invite</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.textBtn} onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.textBtnText}>Already have an account? <Text style={styles.textBtnBold}>Log In</Text></Text>
+        <TouchableOpacity style={styles.primaryBtn} onPress={() => navigation.navigate('EnterInvite')}>
+          <Ionicons name="business-outline" size={20} color={COLORS.white} />
+          <Text style={styles.primaryBtnText}>Enterprise Buddy Login</Text>
         </TouchableOpacity>
       </View>
 
@@ -44,10 +35,5 @@ const styles = StyleSheet.create({
   buttons: { gap: SPACING.md },
   primaryBtn: { flexDirection: 'row', backgroundColor: COLORS.primary, padding: SPACING.md + 2, borderRadius: 14, alignItems: 'center', justifyContent: 'center', gap: SPACING.sm, ...SHADOWS.small },
   primaryBtnText: { color: COLORS.white, fontSize: 16, fontWeight: '700' },
-  secondaryBtn: { flexDirection: 'row', borderWidth: 1.5, borderColor: COLORS.primary, padding: SPACING.md + 2, borderRadius: 14, alignItems: 'center', justifyContent: 'center', gap: SPACING.sm },
-  secondaryBtnText: { color: COLORS.primary, fontSize: 16, fontWeight: '600' },
-  textBtn: { alignItems: 'center', paddingVertical: SPACING.md },
-  textBtnText: { fontSize: 15, color: COLORS.gray },
-  textBtnBold: { color: COLORS.primary, fontWeight: '700' },
   footer: { ...FONTS.small, textAlign: 'center', marginTop: SPACING.xl, fontSize: 12 },
 });

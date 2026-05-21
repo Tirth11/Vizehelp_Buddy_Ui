@@ -1,34 +1,49 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { COLORS, FONTS, SPACING } from '../../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
+import { useApp } from '../../context/AppContext';
+import { MOCK_USER } from '../../data/mockData';
 
 export default function ApprovalPendingScreen({ navigation }) {
+  const { dispatch } = useApp();
+  const [approved, setApproved] = useState(false);
+
+  useEffect(() => {
+    const t1 = setTimeout(() => setApproved(true), 2000);
+    const t2 = setTimeout(() => {
+      dispatch({ type: 'LOGIN', payload: MOCK_USER });
+      navigation.reset({ index: 0, routes: [{ name: 'MainTabs' }] });
+    }, 3000);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Ionicons name="time-outline" size={80} color={COLORS.accent} />
-      <Text style={styles.title}>Profile Under Review</Text>
-      <Text style={styles.subtitle}>Your profile is being reviewed by the enterprise. This usually takes 24-48 hours.</Text>
-
-      <View style={styles.statusList}>
-        <StatusRow label="KYC Documents" status="Submitted" />
-        <StatusRow label="Enterprise Verification" status="Pending" />
-        <StatusRow label="Training" status="Completed" />
-        <StatusRow label="Background Check" status="In Progress" />
-      </View>
-
-      <Text style={styles.nextStep}>Next Step: You will receive a notification once approved.</Text>
-
-      <TouchableOpacity style={styles.supportBtn} onPress={() => navigation.navigate('Support')}>
-        <Ionicons name="chatbubble-outline" size={18} color={COLORS.primary} />
-        <Text style={styles.supportText}>Contact Support</Text>
-      </TouchableOpacity>
+      {!approved ? (
+        <>
+          <Ionicons name="time-outline" size={80} color={COLORS.warning} />
+          <Text style={styles.title}>Profile Under Review</Text>
+          <Text style={styles.subtitle}>Your profile is being reviewed by the enterprise...</Text>
+          <View style={styles.statusList}>
+            <StatusRow label="KYC Documents" status="Submitted" />
+            <StatusRow label="Enterprise Verification" status="Reviewing..." />
+            <StatusRow label="Background Check" status="Passed" />
+          </View>
+        </>
+      ) : (
+        <>
+          <Ionicons name="checkmark-circle" size={80} color={COLORS.success} />
+          <Text style={styles.title}>Approved! 🎉</Text>
+          <Text style={styles.subtitle}>Welcome to VizeHelp Buddy. Taking you to dashboard...</Text>
+        </>
+      )}
     </View>
   );
 }
 
 function StatusRow({ label, status }) {
-  const color = status === 'Completed' || status === 'Submitted' ? COLORS.success : status === 'Pending' ? COLORS.accent : COLORS.primary;
+  const color = status === 'Passed' || status === 'Submitted' ? COLORS.success : COLORS.warning;
   return (
     <View style={styles.statusRow}>
       <Text style={styles.statusLabel}>{label}</Text>
@@ -45,7 +60,4 @@ const styles = StyleSheet.create({
   statusRow: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: SPACING.sm, borderBottomWidth: 1, borderBottomColor: COLORS.border },
   statusLabel: { ...FONTS.regular },
   statusValue: { fontWeight: '600', fontSize: 14 },
-  nextStep: { ...FONTS.regular, color: COLORS.gray, textAlign: 'center', marginTop: SPACING.lg },
-  supportBtn: { flexDirection: 'row', alignItems: 'center', marginTop: SPACING.lg, gap: SPACING.sm },
-  supportText: { color: COLORS.primary, fontSize: 14, fontWeight: '600' },
 });

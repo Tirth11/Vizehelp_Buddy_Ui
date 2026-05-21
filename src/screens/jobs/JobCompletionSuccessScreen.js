@@ -16,7 +16,7 @@ export default function JobCompletionSuccessScreen({ navigation, route }) {
 
       <View style={styles.card}>
         <Row label="Job ID" value={job?.id || 'JOB-1001'} />
-        <Row label="Earning" value={`₹${job?.earning || 450}`} highlight />
+        <Row label="Earning" value={`$${job?.earning || 450}`} highlight />
         <Row label="Time Taken" value={job?.duration || '2 hrs'} />
         <Row label="Customer Rating" value="Pending" />
       </View>
