@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { COLORS, FONTS, SPACING, SHADOWS } from '../../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -19,9 +19,9 @@ export default function SetAvailabilityScreen({ navigation }) {
         <Ionicons name="arrow-back" size={24} color={COLORS.text} />
       </TouchableOpacity>
 
-      <Text style={styles.step}>Step 9 of 11</Text>
-      <Text style={styles.title}>Set Availability</Text>
-      <Text style={styles.subtitle}>When are you available to work?</Text>
+      <Text style={styles.step}>Step 8 of 10</Text>
+      <Text style={styles.title}>Availability</Text>
+      <Text style={styles.subtitle}>Define when you are available for enterprise jobs</Text>
 
       <Text style={styles.label}>Available Days</Text>
       <View style={styles.daysRow}>
@@ -34,7 +34,7 @@ export default function SetAvailabilityScreen({ navigation }) {
 
       <Text style={styles.label}>Preferred Shift</Text>
       <View style={styles.shifts}>
-        {[{ key: 'morning', label: 'Morning', time: '6 AM - 12 PM' }, { key: 'afternoon', label: 'Afternoon', time: '12 PM - 6 PM' }, { key: 'evening', label: 'Evening', time: '6 PM - 12 AM' }, { key: 'full', label: 'Full Day', time: '6 AM - 12 AM' }].map(s => (
+        {[{ key: 'morning', label: 'Morning', time: '6 AM – 12 PM' }, { key: 'afternoon', label: 'Afternoon', time: '12 PM – 6 PM' }, { key: 'evening', label: 'Evening', time: '6 PM – 12 AM' }, { key: 'full', label: 'Full Day', time: '6 AM – 12 AM' }].map(s => (
           <TouchableOpacity key={s.key} style={[styles.shiftBtn, shift === s.key && styles.shiftActive]} onPress={() => setShift(s.key)}>
             <Text style={[styles.shiftLabel, shift === s.key && styles.shiftLabelActive]}>{s.label}</Text>
             <Text style={[styles.shiftTime, shift === s.key && styles.shiftTimeActive]}>{s.time}</Text>
@@ -42,9 +42,20 @@ export default function SetAvailabilityScreen({ navigation }) {
         ))}
       </View>
 
-      <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('AddPayout')}>
+      <Text style={styles.label}>Maximum Travel Distance</Text>
+      <TextInput style={styles.input} placeholder="Miles (e.g., 25)" keyboardType="number-pad" />
+
+      <View style={styles.info}>
+        <Ionicons name="information-circle-outline" size={18} color={COLORS.primary} />
+        <Text style={styles.infoText}>You can set your availability later from the Schedule section.</Text>
+      </View>
+
+      <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('SelectServices')}>
         <Text style={styles.btnText}>Continue</Text>
-        <Ionicons name="arrow-forward" size={20} color={COLORS.white} />
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.skipBtn} onPress={() => navigation.navigate('SelectServices')}>
+        <Text style={styles.skipText}>Skip for Now</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -57,19 +68,24 @@ const styles = StyleSheet.create({
   step: { ...FONTS.caption, color: COLORS.primary, marginBottom: SPACING.xs },
   title: { ...FONTS.title, marginBottom: SPACING.xs },
   subtitle: { ...FONTS.regular, color: COLORS.gray, marginBottom: SPACING.xl },
-  label: { ...FONTS.small, fontWeight: '600', color: COLORS.darkGray, marginBottom: SPACING.sm },
+  label: { ...FONTS.small, fontWeight: '600', color: COLORS.darkGray, marginBottom: SPACING.sm, marginTop: SPACING.md },
   daysRow: { flexDirection: 'row', gap: SPACING.xs, marginBottom: SPACING.xl },
   dayBtn: { flex: 1, paddingVertical: 12, borderRadius: 10, backgroundColor: COLORS.lightGray, alignItems: 'center' },
   dayActive: { backgroundColor: COLORS.primary },
   dayText: { fontSize: 13, fontWeight: '600', color: COLORS.gray },
   dayTextActive: { color: COLORS.white },
-  shifts: { gap: SPACING.sm, marginBottom: SPACING.xl },
+  shifts: { gap: SPACING.sm, marginBottom: SPACING.lg },
   shiftBtn: { padding: SPACING.md, borderRadius: 12, backgroundColor: COLORS.lightGray },
   shiftActive: { backgroundColor: COLORS.primaryLight, borderWidth: 1.5, borderColor: COLORS.primary },
   shiftLabel: { ...FONTS.medium, color: COLORS.darkGray },
   shiftLabelActive: { color: COLORS.primary },
   shiftTime: { ...FONTS.small },
   shiftTimeActive: { color: COLORS.primary },
-  btn: { flexDirection: 'row', backgroundColor: COLORS.primary, padding: SPACING.md + 2, borderRadius: 14, alignItems: 'center', justifyContent: 'center', gap: SPACING.sm, ...SHADOWS.small },
+  input: { borderWidth: 1, borderColor: COLORS.border, borderRadius: 12, padding: SPACING.md, fontSize: 16, marginBottom: SPACING.md },
+  info: { flexDirection: 'row', alignItems: 'flex-start', gap: SPACING.sm, backgroundColor: COLORS.primaryLight, padding: SPACING.md, borderRadius: 12, marginVertical: SPACING.md },
+  infoText: { ...FONTS.small, color: COLORS.darkGray, flex: 1 },
+  btn: { flexDirection: 'row', backgroundColor: COLORS.primary, padding: SPACING.md + 2, borderRadius: 14, alignItems: 'center', justifyContent: 'center', gap: SPACING.sm, ...SHADOWS.small, marginTop: SPACING.md },
   btnText: { color: COLORS.white, fontSize: 16, fontWeight: '700' },
+  skipBtn: { alignItems: 'center', marginTop: SPACING.md },
+  skipText: { color: COLORS.primary, fontSize: 14, fontWeight: '600' },
 });

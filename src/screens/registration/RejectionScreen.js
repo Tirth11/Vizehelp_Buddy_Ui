@@ -1,22 +1,22 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { COLORS, FONTS, SPACING } from '../../constants/theme';
+import { COLORS, FONTS, SPACING, SHADOWS } from '../../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function RejectionScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Ionicons name="alert-circle-outline" size={80} color={COLORS.danger} />
-      <Text style={styles.title}>Resubmission Required</Text>
-      <Text style={styles.subtitle}>Some of your documents were rejected. Please correct and resubmit.</Text>
+      <Text style={styles.title}>Action Required</Text>
+      <Text style={styles.subtitle}>Some of your submitted information was rejected. Please correct and resubmit.</Text>
 
       <View style={styles.reasonBox}>
         <Text style={styles.reasonTitle}>Rejection Reason:</Text>
-        <Text style={styles.reasonText}>Aadhaar document is blurry and unreadable. Please upload a clear photo.</Text>
-        <Text style={styles.docName}>Document: Aadhaar / Government ID</Text>
+        <Text style={styles.reasonText}>Government ID rejected because the uploaded image is unclear. Please upload a clear image of the front and back of your Driver's License.</Text>
+        <Text style={styles.docName}>Section: Identity Verification</Text>
       </View>
 
-      <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('KYCUpload')}>
+      <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('IdentityVerification')}>
         <Ionicons name="cloud-upload-outline" size={20} color={COLORS.white} />
         <Text style={styles.btnText}>Re-upload Document</Text>
       </TouchableOpacity>
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   reasonTitle: { ...FONTS.medium, color: COLORS.danger, marginBottom: SPACING.xs },
   reasonText: { ...FONTS.regular, marginBottom: SPACING.sm },
   docName: { ...FONTS.small, color: COLORS.gray },
-  btn: { flexDirection: 'row', backgroundColor: COLORS.primary, padding: SPACING.md, borderRadius: 12, alignItems: 'center', gap: SPACING.sm, width: '100%', justifyContent: 'center' },
+  btn: { flexDirection: 'row', backgroundColor: COLORS.primary, padding: SPACING.md, borderRadius: 12, alignItems: 'center', gap: SPACING.sm, width: '100%', justifyContent: 'center', ...SHADOWS.small },
   btnText: { color: COLORS.white, fontSize: 16, fontWeight: '600' },
   submitBtn: { marginTop: SPACING.md, padding: SPACING.md, borderWidth: 1, borderColor: COLORS.primary, borderRadius: 12, width: '100%', alignItems: 'center' },
   submitText: { color: COLORS.primary, fontSize: 16, fontWeight: '600' },
