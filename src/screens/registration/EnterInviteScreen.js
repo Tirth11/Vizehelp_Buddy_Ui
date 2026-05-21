@@ -17,8 +17,8 @@ export default function EnterInviteScreen({ navigation }) {
         <View style={styles.logo}>
           <Text style={styles.logoText}>V</Text>
         </View>
-        <Text style={styles.appName}>VizeHelp Buddy</Text>
-        <Text style={styles.tagline}>Work with your enterprise. Accept jobs.{'\n'}Earn with VizeHelp.</Text>
+        <Text style={styles.appName}>Vizehelp Buddyonly</Text>
+        <Text style={styles.tagline}>Login with your enterprise invite to start{'\n'}your Buddy onboarding.</Text>
       </View>
 
       <View style={styles.formSection}>

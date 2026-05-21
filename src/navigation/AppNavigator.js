@@ -14,23 +14,24 @@ import OTPVerificationScreen from '../screens/registration/OTPVerificationScreen
 import TermsConsentScreen from '../screens/registration/TermsConsentScreen';
 import BasicProfileScreen from '../screens/registration/BasicProfileScreen';
 import AddressDetailsScreen from '../screens/registration/AddressDetailsScreen';
-import KYCUploadScreen from '../screens/registration/KYCUploadScreen';
+import IdentityVerificationScreen from '../screens/registration/IdentityVerificationScreen';
+import BackgroundCheckScreen from '../screens/registration/BackgroundCheckScreen';
+import TaxInformationScreen from '../screens/registration/TaxInformationScreen';
 import BankDetailsScreen from '../screens/registration/BankDetailsScreen';
 import EmergencyContactScreen from '../screens/registration/EmergencyContactScreen';
-import TrainingStatusScreen from '../screens/registration/TrainingStatusScreen';
+import SetAvailabilityScreen from '../screens/registration/SetAvailabilityScreen';
+import SelectServicesScreen from '../screens/registration/SelectServicesScreen';
+import SubmitApprovalScreen from '../screens/registration/SubmitApprovalScreen';
 import ApprovalPendingScreen from '../screens/registration/ApprovalPendingScreen';
 import RejectionScreen from '../screens/registration/RejectionScreen';
-import SelectServicesScreen from '../screens/registration/SelectServicesScreen';
+import KYCUploadScreen from '../screens/registration/KYCUploadScreen';
+import TrainingStatusScreen from '../screens/registration/TrainingStatusScreen';
 import SetServiceAreaScreen from '../screens/registration/SetServiceAreaScreen';
-import SetAvailabilityScreen from '../screens/registration/SetAvailabilityScreen';
 import AddPayoutScreen from '../screens/registration/AddPayoutScreen';
-import SubmitApprovalScreen from '../screens/registration/SubmitApprovalScreen';
 import CreateAccountScreen from '../screens/registration/CreateAccountScreen';
 import VerifyMobileScreen from '../screens/registration/VerifyMobileScreen';
 import VerifyEmailScreen from '../screens/registration/VerifyEmailScreen';
 import CompleteProfileScreen from '../screens/registration/CompleteProfileScreen';
-import IdentityVerificationScreen from '../screens/registration/IdentityVerificationScreen';
-import BackgroundCheckScreen from '../screens/registration/BackgroundCheckScreen';
 
 // Auth (additional)
 import WelcomeScreen from '../screens/auth/WelcomeScreen';
@@ -144,14 +145,14 @@ export default function AppNavigator() {
         {/* Splash */}
         <Stack.Screen name="Splash" component={SplashScreen} />
 
-        {/* Enterprise Login Flow */}
+        {/* Enterprise Invite Login */}
         <Stack.Screen name="EnterInvite" component={EnterInviteScreen} />
         <Stack.Screen name="OTPVerification" component={OTPVerificationScreen} />
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="LoginOTP" component={LoginOTPScreen} />
 
-        {/* New Buddy Registration Flow */}
+        {/* USA Buddy Onboarding Flow */}
         <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
         <Stack.Screen name="VerifyMobile" component={VerifyMobileScreen} />
         <Stack.Screen name="VerifyEmail" component={VerifyEmailScreen} />
@@ -159,19 +160,22 @@ export default function AppNavigator() {
         <Stack.Screen name="TermsConsent" component={TermsConsentScreen} />
         <Stack.Screen name="BasicProfile" component={BasicProfileScreen} />
         <Stack.Screen name="AddressDetails" component={AddressDetailsScreen} />
-        <Stack.Screen name="KYCUpload" component={KYCUploadScreen} />
-        <Stack.Screen name="BankDetails" component={BankDetailsScreen} />
-        <Stack.Screen name="EmergencyContact" component={EmergencyContactScreen} />
         <Stack.Screen name="IdentityVerification" component={IdentityVerificationScreen} />
         <Stack.Screen name="BackgroundCheck" component={BackgroundCheckScreen} />
-        <Stack.Screen name="SelectServices" component={SelectServicesScreen} />
-        <Stack.Screen name="SetServiceArea" component={SetServiceAreaScreen} />
+        <Stack.Screen name="TaxInformation" component={TaxInformationScreen} />
+        <Stack.Screen name="BankDetails" component={BankDetailsScreen} />
+        <Stack.Screen name="EmergencyContact" component={EmergencyContactScreen} />
         <Stack.Screen name="SetAvailability" component={SetAvailabilityScreen} />
-        <Stack.Screen name="AddPayout" component={AddPayoutScreen} />
+        <Stack.Screen name="SelectServices" component={SelectServicesScreen} />
         <Stack.Screen name="SubmitApproval" component={SubmitApprovalScreen} />
-        <Stack.Screen name="TrainingStatus" component={TrainingStatusScreen} />
         <Stack.Screen name="ApprovalPending" component={ApprovalPendingScreen} />
         <Stack.Screen name="Rejection" component={RejectionScreen} />
+
+        {/* Legacy (redirects) */}
+        <Stack.Screen name="KYCUpload" component={KYCUploadScreen} />
+        <Stack.Screen name="SetServiceArea" component={SetServiceAreaScreen} />
+        <Stack.Screen name="AddPayout" component={AddPayoutScreen} />
+        <Stack.Screen name="TrainingStatus" component={TrainingStatusScreen} />
 
         {/* Post-Approval */}
         <Stack.Screen name="AccountApproved" component={AccountApprovedScreen} />

@@ -1,49 +1,50 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { COLORS, FONTS, SPACING, SHADOWS } from '../../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
-import { SERVICE_CATEGORIES } from '../../data/mockData';
 
-const ICONS = {
-  'EV Charging Support': 'flash-outline',
-  'Home Cleaning': 'home-outline',
-  'Parking Assistance': 'car-outline',
-  'Shopping Assistance': 'cart-outline',
-  'Elder Care': 'heart-outline',
-  'Pickup & Drop-off': 'swap-horizontal-outline',
-  'EV Laundry & Detailing': 'water-outline',
-  'Field Support': 'construct-outline',
-};
+const ASSIGNED_SERVICES = [
+  { name: 'Home Assistance', icon: 'home-outline' },
+  { name: 'Pickup & Drop', icon: 'swap-horizontal-outline' },
+  { name: 'Cleaning Support', icon: 'water-outline' },
+  { name: 'Senior Assistance', icon: 'heart-outline' },
+  { name: 'Field Support', icon: 'construct-outline' },
+];
 
 export default function SelectServicesScreen({ navigation }) {
-  const [selected, setSelected] = useState([]);
-
-  const toggle = (svc) => {
-    setSelected(prev => prev.includes(svc) ? prev.filter(s => s !== svc) : [...prev, svc]);
-  };
-
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.back}>
         <Ionicons name="arrow-back" size={24} color={COLORS.text} />
       </TouchableOpacity>
 
-      <Text style={styles.step}>Step 7 of 11</Text>
-      <Text style={styles.title}>Select Services</Text>
-      <Text style={styles.subtitle}>Choose the services you'd like to offer. You can change these later.</Text>
+      <Text style={styles.step}>Step 9 of 10</Text>
+      <Text style={styles.title}>Assigned Services</Text>
+      <Text style={styles.subtitle}>Services assigned by your enterprise. These are managed by your admin.</Text>
 
-      <View style={styles.grid}>
-        {SERVICE_CATEGORIES.map(svc => (
-          <TouchableOpacity key={svc} style={[styles.card, selected.includes(svc) && styles.cardActive]} onPress={() => toggle(svc)}>
-            <Ionicons name={ICONS[svc] || 'ellipse-outline'} size={26} color={selected.includes(svc) ? COLORS.primary : COLORS.gray} />
-            <Text style={[styles.cardText, selected.includes(svc) && styles.cardTextActive]}>{svc}</Text>
-            {selected.includes(svc) && <Ionicons name="checkmark-circle" size={18} color={COLORS.primary} style={styles.check} />}
-          </TouchableOpacity>
+      <View style={styles.enterpriseCard}>
+        <Ionicons name="business" size={22} color={COLORS.primary} />
+        <Text style={styles.enterpriseName}>ABC Home Services</Text>
+      </View>
+
+      <Text style={styles.label}>Assigned Service Categories</Text>
+      <View style={styles.list}>
+        {ASSIGNED_SERVICES.map(svc => (
+          <View key={svc.name} style={styles.serviceRow}>
+            <Ionicons name={svc.icon} size={22} color={COLORS.primary} />
+            <Text style={styles.serviceName}>{svc.name}</Text>
+            <Ionicons name="checkmark-circle" size={20} color={COLORS.success} />
+          </View>
         ))}
       </View>
 
-      <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('SetServiceArea')}>
-        <Text style={styles.btnText}>Continue ({selected.length} selected)</Text>
+      <View style={styles.info}>
+        <Ionicons name="information-circle-outline" size={18} color={COLORS.primary} />
+        <Text style={styles.infoText}>Services are assigned by your enterprise. Contact your admin to request changes.</Text>
+      </View>
+
+      <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('SubmitApproval')}>
+        <Text style={styles.btnText}>Continue to Review</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -56,13 +57,14 @@ const styles = StyleSheet.create({
   step: { ...FONTS.caption, color: COLORS.primary, marginBottom: SPACING.xs },
   title: { ...FONTS.title, marginBottom: SPACING.xs },
   subtitle: { ...FONTS.regular, color: COLORS.gray, marginBottom: SPACING.xl },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: SPACING.sm, marginBottom: SPACING.xl },
-  card: { width: '48%', padding: SPACING.md, borderRadius: 14, backgroundColor: COLORS.lightGray, alignItems: 'center', gap: SPACING.sm, position: 'relative' },
-  cardActive: { backgroundColor: COLORS.primaryLight, borderWidth: 1.5, borderColor: COLORS.primary },
-  cardText: { ...FONTS.small, fontWeight: '600', textAlign: 'center', color: COLORS.darkGray },
-  cardTextActive: { color: COLORS.primary },
-  check: { position: 'absolute', top: 8, right: 8 },
+  enterpriseCard: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm, backgroundColor: COLORS.primaryLight, padding: SPACING.md, borderRadius: 12, marginBottom: SPACING.lg },
+  enterpriseName: { ...FONTS.medium, color: COLORS.primary },
+  label: { ...FONTS.small, fontWeight: '600', color: COLORS.darkGray, marginBottom: SPACING.sm },
+  list: { gap: SPACING.sm, marginBottom: SPACING.lg },
+  serviceRow: { flexDirection: 'row', alignItems: 'center', gap: SPACING.md, backgroundColor: COLORS.lightGray, padding: SPACING.md, borderRadius: 12 },
+  serviceName: { ...FONTS.medium, flex: 1 },
+  info: { flexDirection: 'row', alignItems: 'flex-start', gap: SPACING.sm, backgroundColor: COLORS.primaryLight, padding: SPACING.md, borderRadius: 12, marginBottom: SPACING.xl },
+  infoText: { ...FONTS.small, color: COLORS.darkGray, flex: 1 },
   btn: { backgroundColor: COLORS.primary, padding: SPACING.md + 2, borderRadius: 14, alignItems: 'center', ...SHADOWS.small },
-  btnDisabled: { opacity: 0.5 },
   btnText: { color: COLORS.white, fontSize: 16, fontWeight: '700' },
 });

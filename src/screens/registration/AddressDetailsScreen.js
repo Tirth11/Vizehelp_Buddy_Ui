@@ -4,28 +4,29 @@ import { COLORS, FONTS, SPACING } from '../../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function AddressDetailsScreen({ navigation }) {
-  const [form, setForm] = useState({ address: '', city: '', state: '', pin: '', landmark: '' });
+  const [form, setForm] = useState({ street: '', apt: '', city: '', state: '', zip: '' });
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.title}>Address Details</Text>
-      <Text style={styles.subtitle}>Your residential and service area details</Text>
+      <Text style={styles.subtitle}>Your residential address in USA format</Text>
 
       <TouchableOpacity style={styles.locationBtn}>
         <Ionicons name="location" size={20} color={COLORS.primary} />
         <Text style={styles.locationText}>Use Current Location</Text>
       </TouchableOpacity>
 
-      <TextInput style={styles.input} placeholder="Current Address *" multiline value={form.address} onChangeText={v => setForm({ ...form, address: v })} />
+      <TextInput style={styles.input} placeholder="Street Address *" value={form.street} onChangeText={v => setForm({ ...form, street: v })} />
+      <TextInput style={styles.input} placeholder="Apartment / Unit Number (optional)" value={form.apt} onChangeText={v => setForm({ ...form, apt: v })} />
       <TextInput style={styles.input} placeholder="City *" value={form.city} onChangeText={v => setForm({ ...form, city: v })} />
       <TextInput style={styles.input} placeholder="State *" value={form.state} onChangeText={v => setForm({ ...form, state: v })} />
-      <TextInput style={styles.input} placeholder="PIN Code *" keyboardType="number-pad" maxLength={6} value={form.pin} onChangeText={v => setForm({ ...form, pin: v })} />
-      <TextInput style={styles.input} placeholder="Landmark" value={form.landmark} onChangeText={v => setForm({ ...form, landmark: v })} />
+      <TextInput style={styles.input} placeholder="ZIP Code *" keyboardType="number-pad" maxLength={5} value={form.zip} onChangeText={v => setForm({ ...form, zip: v })} />
 
-      <Text style={styles.label}>Service Area Preference</Text>
-      <TextInput style={styles.input} placeholder="e.g., Indiranagar, Koramangala" />
+      <Text style={styles.label}>Service Area Preference (optional)</Text>
+      <TextInput style={styles.input} placeholder="Preferred Service Area (ZIP codes or city)" />
+      <TextInput style={styles.input} placeholder="Maximum Travel Distance (miles)" keyboardType="number-pad" />
 
-      <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('KYCUpload')}>
+      <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('IdentityVerification')}>
         <Text style={styles.btnText}>Save and Continue</Text>
       </TouchableOpacity>
     </ScrollView>
