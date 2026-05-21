@@ -22,7 +22,7 @@
       },
       "package": "com.vizehelp.buddy"
     },
-    "platforms": ["ios", "android"],
+    "platforms": ["ios", "android", "web"],
     "plugins": [
       "expo-font"
     ]
