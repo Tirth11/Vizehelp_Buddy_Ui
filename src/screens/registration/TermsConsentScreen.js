@@ -1,67 +1,97 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
-import { COLORS, FONTS, SPACING } from '../../constants/theme';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { COLORS, FONTS, SPACING, RADIUS, SHADOWS } from '../../constants/theme';
+import StepProgress from '../../components/StepProgress';
+
+const ITEMS = [
+  { key: 'terms',    label: 'I agree to the Terms of Service' },
+  { key: 'privacy',  label: 'I agree to the Privacy Policy' },
+  { key: 'location', label: 'I consent to location access for jobs' },
+  { key: 'bgCheck',  label: 'I consent to background verification' },
+];
 
 export default function TermsConsentScreen({ navigation }) {
   const [agreed, setAgreed] = useState({ terms: false, privacy: false, location: false, bgCheck: false });
-
   const allAgreed = Object.values(agreed).every(Boolean);
 
   const toggle = (key) => setAgreed(prev => ({ ...prev, [key]: !prev[key] }));
-
-  const handleContinue = () => {
-    navigation.navigate('BasicProfile');
-  };
-
-  const CheckItem = ({ label, field }) => (
-    <TouchableOpacity style={styles.checkRow} onPress={() => toggle(field)}>
-      <Ionicons name={agreed[field] ? 'checkbox' : 'square-outline'} size={24} color={agreed[field] ? COLORS.primary : COLORS.gray} />
-      <Text style={styles.checkLabel}>{label}</Text>
-    </TouchableOpacity>
-  );
+  const acceptAll = () => setAgreed({ terms: true, privacy: true, location: true, bgCheck: true });
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>Terms and Consent</Text>
-      <Text style={styles.subtitle}>Please review and accept the following to continue.</Text>
+    <View style={styles.container}>
+      <StepProgress
+        step={1}
+        total={9}
+        onBack={() => navigation.goBack()}
+        title="Terms & Consent"
+        subtitle="Please review and accept to continue."
+      />
 
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Terms of Service</Text>
-        <Text style={styles.sectionText}>By registering, you agree to provide services as per Vizehelp standards, maintain professionalism, and follow enterprise guidelines.</Text>
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <View style={styles.summary}>
+          <Ionicons name="shield-checkmark-outline" size={20} color={COLORS.primary} />
+          <Text style={styles.summaryText}>Your data is encrypted and handled per US privacy laws. You can withdraw consent anytime.</Text>
+        </View>
+
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Terms of Service</Text>
+          <Text style={styles.cardText}>You agree to provide services per VizehelpBuddy standards, maintain professionalism, and follow enterprise guidelines.</Text>
+        </View>
+
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Privacy Policy</Text>
+          <Text style={styles.cardText}>Your personal data is used only for identity verification, job allocation, and payment processing.</Text>
+        </View>
+
+        <TouchableOpacity style={styles.acceptAllBtn} onPress={acceptAll}>
+          <Ionicons name="checkmark-done" size={18} color={COLORS.primary} />
+          <Text style={styles.acceptAllText}>Accept All</Text>
+        </TouchableOpacity>
+
+        <View style={styles.checks}>
+          {ITEMS.map(item => (
+            <TouchableOpacity key={item.key} style={styles.checkRow} onPress={() => toggle(item.key)} activeOpacity={0.7}>
+              <View style={[styles.checkbox, agreed[item.key] && styles.checkboxOn]}>
+                {agreed[item.key] && <Ionicons name="checkmark" size={16} color={COLORS.white} />}
+              </View>
+              <Text style={styles.checkLabel}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
+
+      <View style={styles.footer}>
+        <TouchableOpacity
+          style={[styles.btn, !allAgreed && styles.btnDisabled]}
+          disabled={!allAgreed}
+          onPress={() => navigation.navigate('BasicProfile')}
+        >
+          <Text style={styles.btnText}>Agree & Continue</Text>
+          <Ionicons name="arrow-forward" size={20} color={COLORS.white} />
+        </TouchableOpacity>
       </View>
-
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Privacy Policy</Text>
-        <Text style={styles.sectionText}>Your personal data will be used for identity verification, job allocation, and payment processing as per our privacy policy.</Text>
-      </View>
-
-      <View style={styles.checkboxes}>
-        <CheckItem label="I agree to the Terms of Service" field="terms" />
-        <CheckItem label="I agree to the Privacy Policy" field="privacy" />
-        <CheckItem label="I consent to location access for job allocation" field="location" />
-        <CheckItem label="I consent to background verification" field="bgCheck" />
-      </View>
-
-      <TouchableOpacity style={styles.btn} onPress={handleContinue}>
-        <Text style={styles.btnText}>Continue</Text>
-      </TouchableOpacity>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: COLORS.white },
-  content: { padding: SPACING.lg, paddingTop: SPACING.xxl },
-  title: { ...FONTS.title, marginBottom: SPACING.sm },
-  subtitle: { ...FONTS.regular, color: COLORS.gray, marginBottom: SPACING.lg },
-  section: { backgroundColor: COLORS.lightGray, padding: SPACING.md, borderRadius: 12, marginBottom: SPACING.md },
-  sectionTitle: { ...FONTS.medium, marginBottom: SPACING.xs },
-  sectionText: { ...FONTS.regular, color: COLORS.gray },
-  checkboxes: { marginVertical: SPACING.lg },
-  checkRow: { flexDirection: 'row', alignItems: 'center', marginBottom: SPACING.md },
-  checkLabel: { ...FONTS.regular, marginLeft: SPACING.sm, flex: 1 },
-  btn: { backgroundColor: COLORS.primary, padding: SPACING.md, borderRadius: 12, alignItems: 'center' },
-  btnDisabled: { opacity: 0.5 },
-  btnText: { color: COLORS.white, fontSize: 16, fontWeight: '600' },
+  content: { padding: SPACING.lg, paddingBottom: SPACING.xl },
+  summary: { flexDirection: 'row', alignItems: 'flex-start', backgroundColor: COLORS.primaryLight, padding: SPACING.md, borderRadius: RADIUS.md, gap: SPACING.sm, marginBottom: SPACING.md },
+  summaryText: { ...FONTS.small, color: COLORS.text, flex: 1, lineHeight: 19 },
+  card: { backgroundColor: COLORS.background, padding: SPACING.md, borderRadius: RADIUS.md, marginBottom: SPACING.md, borderWidth: 1, borderColor: COLORS.border },
+  cardTitle: { ...FONTS.medium, marginBottom: SPACING.xs },
+  cardText: { ...FONTS.regular, color: COLORS.textLight, lineHeight: 20 },
+  acceptAllBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: SPACING.xs, padding: SPACING.sm, marginVertical: SPACING.sm },
+  acceptAllText: { color: COLORS.primary, fontWeight: '700', fontSize: 14 },
+  checks: { gap: SPACING.sm, marginTop: SPACING.sm },
+  checkRow: { flexDirection: 'row', alignItems: 'center', padding: SPACING.md, backgroundColor: COLORS.background, borderRadius: RADIUS.md, borderWidth: 1, borderColor: COLORS.border, gap: SPACING.sm },
+  checkbox: { width: 22, height: 22, borderRadius: 6, borderWidth: 2, borderColor: COLORS.border, alignItems: 'center', justifyContent: 'center' },
+  checkboxOn: { backgroundColor: COLORS.primary, borderColor: COLORS.primary },
+  checkLabel: { ...FONTS.regular, flex: 1 },
+  footer: { padding: SPACING.lg, borderTopWidth: 1, borderTopColor: COLORS.border, backgroundColor: COLORS.white },
+  btn: { flexDirection: 'row', backgroundColor: COLORS.primary, padding: SPACING.md + 2, borderRadius: RADIUS.md, alignItems: 'center', justifyContent: 'center', gap: SPACING.sm, ...SHADOWS.small },
+  btnDisabled: { opacity: 0.4 },
+  btnText: { color: COLORS.white, fontSize: 16, fontWeight: '700' },
 });

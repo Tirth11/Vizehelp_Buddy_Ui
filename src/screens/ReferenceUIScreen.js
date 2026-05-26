@@ -7,7 +7,7 @@ export default function ReferenceUIScreen({ navigation }) {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.title}>Reference UI</Text>
-      <Text style={styles.subtitle}>Vizehelp Buddy Design System</Text>
+      <Text style={styles.subtitle}>VizehelpBuddy Design System</Text>
 
       {/* Colors */}
       <Text style={styles.sectionTitle}>Colors</Text>

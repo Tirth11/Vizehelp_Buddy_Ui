@@ -1,47 +1,51 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
-import { COLORS, FONTS, SPACING, SHADOWS } from '../../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
+import { COLORS, FONTS, SPACING, RADIUS, SHADOWS, APP_NAME } from '../../constants/theme';
+import StepProgress from '../../components/StepProgress';
 
 export default function CreateAccountScreen({ navigation }) {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
+  const [form, setForm] = useState({ firstName: '', lastName: '', phone: '', email: '' });
+  const update = (k, v) => setForm(p => ({ ...p, [k]: v }));
+  const valid = form.firstName && form.lastName && form.phone && form.email;
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <StepProgress
+        step={1}
+        total={4}
+        onBack={() => navigation.goBack()}
+        title="Create Your Account"
+        subtitle={`Get started as a ${APP_NAME}`}
+      />
+
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.back}>
-          <Ionicons name="arrow-back" size={24} color={COLORS.text} />
-        </TouchableOpacity>
+        <Field label="First Name *"   icon="person-outline" value={form.firstName} onChangeText={v => update('firstName', v)} placeholder="John" />
+        <Field label="Last Name *"    icon="person-outline" value={form.lastName}  onChangeText={v => update('lastName', v)}  placeholder="Smith" />
+        <Field label="Mobile Number *" icon="call-outline"  value={form.phone}     onChangeText={v => update('phone', v)}     placeholder="+1 (555) 000-0000" keyboardType="phone-pad" />
+        <Field label="Email Address *" icon="mail-outline"  value={form.email}     onChangeText={v => update('email', v)}     placeholder="john@example.com" keyboardType="email-address" autoCapitalize="none" />
+      </ScrollView>
 
-        <Text style={styles.step}>Step 1 of 11</Text>
-        <Text style={styles.title}>Create Your Account</Text>
-        <Text style={styles.subtitle}>Let's get you started as a Vizehelp Buddy</Text>
-
-        <View style={styles.form}>
-          <Input label="First Name" value={firstName} onChangeText={setFirstName} placeholder="John" icon="person-outline" />
-          <Input label="Last Name" value={lastName} onChangeText={setLastName} placeholder="Smith" icon="person-outline" />
-          <Input label="Mobile Number" value={phone} onChangeText={setPhone} placeholder="+1 (555) 000-0000" keyboardType="phone-pad" icon="call-outline" />
-          <Input label="Email Address" value={email} onChangeText={setEmail} placeholder="john@example.com" keyboardType="email-address" icon="mail-outline" />
-        </View>
-
-        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('VerifyMobile')}>
+      <View style={styles.footer}>
+        <TouchableOpacity
+          style={[styles.btn, !valid && styles.btnDisabled]}
+          disabled={!valid}
+          onPress={() => navigation.navigate('VerifyMobile')}
+        >
           <Text style={styles.btnText}>Continue</Text>
           <Ionicons name="arrow-forward" size={20} color={COLORS.white} />
         </TouchableOpacity>
-      </ScrollView>
+      </View>
     </KeyboardAvoidingView>
   );
 }
 
-function Input({ label, icon, ...props }) {
+function Field({ label, icon, ...props }) {
   return (
-    <View style={styles.inputWrap}>
-      <Text style={styles.label}>{label}</Text>
-      <View style={styles.inputRow}>
-        <Ionicons name={icon} size={18} color={COLORS.gray} />
+    <View style={styles.fieldWrap}>
+      <Text style={styles.fieldLabel}>{label}</Text>
+      <View style={styles.fieldRow}>
+        <Ionicons name={icon} size={18} color={COLORS.textLight} />
         <TextInput style={styles.input} placeholderTextColor={COLORS.textLight} {...props} />
       </View>
     </View>
@@ -50,16 +54,13 @@ function Input({ label, icon, ...props }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: COLORS.white },
-  content: { padding: SPACING.lg, paddingTop: SPACING.xxl },
-  back: { marginBottom: SPACING.lg },
-  step: { ...FONTS.caption, color: COLORS.primary, marginBottom: SPACING.xs },
-  title: { ...FONTS.title, marginBottom: SPACING.xs },
-  subtitle: { ...FONTS.regular, color: COLORS.gray, marginBottom: SPACING.xl },
-  form: { gap: SPACING.md },
-  inputWrap: { marginBottom: SPACING.sm },
-  label: { ...FONTS.small, fontWeight: '600', color: COLORS.darkGray, marginBottom: SPACING.xs },
-  inputRow: { flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.lightGray, borderRadius: 12, paddingHorizontal: SPACING.md, gap: SPACING.sm },
-  input: { flex: 1, paddingVertical: 14, fontSize: 16, color: COLORS.text },
-  btn: { flexDirection: 'row', backgroundColor: COLORS.primary, padding: SPACING.md + 2, borderRadius: 14, alignItems: 'center', justifyContent: 'center', gap: SPACING.sm, marginTop: SPACING.xl, ...SHADOWS.small },
+  content: { padding: SPACING.lg, paddingBottom: SPACING.xl },
+  fieldWrap: { marginBottom: SPACING.md },
+  fieldLabel: { ...FONTS.small, fontWeight: '600', color: COLORS.text, marginBottom: SPACING.xs },
+  fieldRow: { flexDirection: 'row', alignItems: 'center', backgroundColor: COLORS.lightGray, borderRadius: RADIUS.md, paddingHorizontal: SPACING.md, gap: SPACING.sm, height: 52 },
+  input: { flex: 1, fontSize: 16, color: COLORS.text },
+  footer: { padding: SPACING.lg, borderTopWidth: 1, borderTopColor: COLORS.border, backgroundColor: COLORS.white },
+  btn: { flexDirection: 'row', backgroundColor: COLORS.primary, padding: SPACING.md + 2, borderRadius: RADIUS.md, alignItems: 'center', justifyContent: 'center', gap: SPACING.sm, ...SHADOWS.small },
+  btnDisabled: { opacity: 0.4 },
   btnText: { color: COLORS.white, fontSize: 16, fontWeight: '700' },
 });
