@@ -1,9 +1,10 @@
 import React from 'react';
+import { View, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { COLORS } from '../constants/theme';
+import { COLORS, RADIUS, SHADOWS } from '../constants/theme';
 
 // Auth
 import SplashScreen from '../screens/auth/SplashScreen';
@@ -120,13 +121,25 @@ function MainTabs() {
           else if (route.name === 'Schedule') iconName = focused ? 'calendar' : 'calendar-outline';
           else if (route.name === 'Earnings') iconName = focused ? 'wallet' : 'wallet-outline';
           else if (route.name === 'Profile') iconName = focused ? 'person' : 'person-outline';
-          return <Ionicons name={iconName} size={size} color={color} />;
+          return (
+            <View style={{ alignItems: 'center' }}>
+              {focused && <View style={{ position: 'absolute', top: -8, width: 24, height: 3, borderRadius: 2, backgroundColor: COLORS.primary }} />}
+              <Ionicons name={iconName} size={22} color={color} />
+            </View>
+          );
         },
         tabBarActiveTintColor: COLORS.primary,
         tabBarInactiveTintColor: COLORS.gray,
         headerShown: false,
-        tabBarStyle: { borderTopWidth: 0, elevation: 8, shadowOpacity: 0.08, shadowRadius: 8, paddingTop: 4, height: 60, paddingBottom: 8 },
-        tabBarLabelStyle: { fontSize: 11, fontWeight: '600' },
+        tabBarStyle: {
+          borderTopWidth: 0,
+          backgroundColor: COLORS.white,
+          height: Platform.OS === 'ios' ? 88 : 68,
+          paddingTop: 8,
+          paddingBottom: Platform.OS === 'ios' ? 28 : 12,
+          ...SHADOWS.medium,
+        },
+        tabBarLabelStyle: { fontSize: 11, fontWeight: '600', marginTop: 2 },
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
