@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { COLORS, FONTS, SPACING } from '../../constants/theme';
 
-const REASONS = ['Too far', 'Not available', 'Wrong skill', 'Personal reason', 'Other'];
+const REASONS = ['Too far', 'Not available', 'Vehicle/service issue', 'Emergency', 'Other'];
 
 export default function RejectJobScreen({ navigation, route }) {
   const [reason, setReason] = useState('');

@@ -1,11 +1,26 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { COLORS, FONTS, SPACING, SHADOWS } from '../../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function BankDetailsScreen({ navigation }) {
-  const [form, setForm] = useState({ holder: '', bank: '', routing: '', account: '', confirmAccount: '', accountType: '' });
+  const [form, setForm] = useState({ holder: '', bank: '', routing: '', account: '', confirmAccount: '', accountType: 'Checking', debitCard: '' });
   const [payoutMethod, setPayoutMethod] = useState('ach');
+  const [isFocused, setIsFocused] = useState(false);
+
+  const getMaskedAccount = () => {
+    if (!form.account) return '';
+    if (isFocused) return form.account;
+    
+    // Mask account number
+    if (form.account.length <= 4) return form.account;
+    return `******${form.account.slice(-4)}`;
+  };
+
+  const handleSave = () => {
+    // Non-mandatory validation for mockup simplicity
+    navigation.navigate('EmergencyContact');
+  };
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
@@ -14,8 +29,8 @@ export default function BankDetailsScreen({ navigation }) {
       </TouchableOpacity>
 
       <Text style={styles.step}>Step 6 of 10</Text>
-      <Text style={styles.title}>Payout Details</Text>
-      <Text style={styles.subtitle}>Add your bank account to receive earnings in USD</Text>
+      <Text style={styles.title}>Payout Setup</Text>
+      <Text style={styles.subtitle}>Add your bank account or debit card details to receive USD payouts</Text>
 
       <Text style={styles.label}>Payout Method</Text>
       <View style={styles.methods}>
@@ -30,10 +45,30 @@ export default function BankDetailsScreen({ navigation }) {
       </View>
 
       <TextInput style={styles.input} placeholder="Account Holder Name *" value={form.holder} onChangeText={v => setForm({ ...form, holder: v })} />
-      <TextInput style={styles.input} placeholder="Bank Name" value={form.bank} onChangeText={v => setForm({ ...form, bank: v })} />
+      <TextInput style={styles.input} placeholder="Bank Name *" value={form.bank} onChangeText={v => setForm({ ...form, bank: v })} />
       <TextInput style={styles.input} placeholder="Routing Number * (9 digits)" keyboardType="number-pad" maxLength={9} value={form.routing} onChangeText={v => setForm({ ...form, routing: v })} />
-      <TextInput style={styles.input} placeholder="Account Number *" keyboardType="number-pad" value={form.account} onChangeText={v => setForm({ ...form, account: v })} />
-      <TextInput style={styles.input} placeholder="Confirm Account Number *" keyboardType="number-pad" value={form.confirmAccount} onChangeText={v => setForm({ ...form, confirmAccount: v })} />
+      
+      <TextInput 
+        style={styles.input} 
+        placeholder="Account Number *" 
+        keyboardType="number-pad" 
+        value={getMaskedAccount()}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        onChangeText={v => {
+          if (isFocused) {
+            setForm({ ...form, account: v });
+          }
+        }}
+      />
+      
+      <TextInput 
+        style={styles.input} 
+        placeholder="Confirm Account Number *" 
+        keyboardType="number-pad" 
+        value={form.confirmAccount}
+        onChangeText={v => setForm({ ...form, confirmAccount: v })}
+      />
 
       <Text style={styles.label}>Account Type *</Text>
       <View style={styles.typeRow}>
@@ -45,7 +80,13 @@ export default function BankDetailsScreen({ navigation }) {
       </View>
 
       {payoutMethod === 'instant' && (
-        <TextInput style={styles.input} placeholder="Debit Card Number (for instant payout)" keyboardType="number-pad" />
+        <TextInput 
+          style={styles.input} 
+          placeholder="Debit Card Number (for instant payout - optional)" 
+          keyboardType="number-pad"
+          value={form.debitCard}
+          onChangeText={v => setForm({ ...form, debitCard: v })}
+        />
       )}
 
       <View style={styles.info}>
@@ -53,8 +94,8 @@ export default function BankDetailsScreen({ navigation }) {
         <Text style={styles.infoText}>Your banking info is encrypted with 256-bit SSL. Routing numbers identify your U.S. financial institution for ACH transfers.</Text>
       </View>
 
-      <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('EmergencyContact')}>
-        <Text style={styles.btnText}>Save & Continue</Text>
+      <TouchableOpacity style={styles.btn} onPress={handleSave}>
+        <Text style={styles.btnText}>Save Payout Details</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.skipBtn} onPress={() => navigation.navigate('EmergencyContact')}>
@@ -78,7 +119,7 @@ const styles = StyleSheet.create({
   methodActive: { backgroundColor: COLORS.primaryLight, borderWidth: 1.5, borderColor: COLORS.primary },
   methodText: { ...FONTS.medium, color: COLORS.gray },
   methodTextActive: { color: COLORS.primary },
-  input: { borderWidth: 1, borderColor: COLORS.border, borderRadius: 12, padding: SPACING.md, fontSize: 16, marginBottom: SPACING.md },
+  input: { borderWidth: 1, borderColor: COLORS.border, borderRadius: 12, padding: SPACING.md, fontSize: 16, marginBottom: SPACING.md, color: COLORS.text },
   typeRow: { flexDirection: 'row', gap: SPACING.sm, marginBottom: SPACING.lg },
   typeBtn: { flex: 1, padding: SPACING.md, borderRadius: 12, backgroundColor: COLORS.lightGray, alignItems: 'center' },
   typeActive: { backgroundColor: COLORS.primaryLight, borderWidth: 1.5, borderColor: COLORS.primary },

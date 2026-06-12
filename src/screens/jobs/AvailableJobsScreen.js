@@ -1,23 +1,59 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { COLORS, FONTS, SPACING, SHADOWS } from '../../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
+import { useApp } from '../../context/AppContext';
 
 const AVAILABLE_JOBS = [
-  { id: 'JOB-2001', type: 'EV Charging', earning: 32, distance: '3.2 mi', duration: '1 hr', time: '3:30 PM', area: 'Uptown Dallas', tipEligible: true, provider: 'Vizehelp' },
-  { id: 'JOB-2002', type: 'Home Cleaning', earning: 65, distance: '1.8 mi', duration: '2 hrs', time: '5:00 PM', area: 'Oak Lawn', tipEligible: true, provider: 'CleanPro Services' },
-  { id: 'JOB-2003', type: 'Parking Assistance', earning: 28, distance: '4.5 mi', duration: '45 min', time: '6:15 PM', area: 'Deep Ellum', tipEligible: false, provider: 'Vizehelp' },
-  { id: 'JOB-2004', type: 'Elder Care', earning: 45, distance: '2.1 mi', duration: '1.5 hrs', time: '7:00 PM', area: 'Highland Park', tipEligible: true, provider: 'CarePlus' },
+  { id: 'JOB-2001', type: 'EV Charging Support', earning: 32, distance: '3.2 mi', duration: '1 hr', time: '3:30 PM', area: 'Uptown Dallas', tipEligible: true, provider: 'ABC Home Services' },
+  { id: 'JOB-2002', type: 'Home Cleaning', earning: 65, distance: '1.8 mi', duration: '2 hrs', time: '5:00 PM', area: 'Oak Lawn', tipEligible: true, provider: 'ABC Home Services' },
+  { id: 'JOB-2003', type: 'Parking Assistance', earning: 28, distance: '4.5 mi', duration: '45 min', time: '6:15 PM', area: 'Deep Ellum', tipEligible: false, provider: 'ABC Home Services' },
+  { id: 'JOB-2004', type: 'Senior Buddy Support', earning: 45, distance: '2.1 mi', duration: '1.5 hrs', time: '7:00 PM', area: 'Highland Park', tipEligible: true, provider: 'ABC Home Services' },
 ];
 
 export default function AvailableJobsScreen({ navigation }) {
+  const { state } = useApp();
+
+  const handleAccept = (job) => {
+    if (!state.isOnline) {
+      Alert.alert('Go Online Required', 'You must go Online to accept available jobs. Toggle status from your Dashboard.');
+      return;
+    }
+    
+    navigation.navigate('AcceptJob', { 
+      job: { 
+        ...job, 
+        customer: 'Customer', 
+        location: job.area, 
+        status: 'new', 
+        slaTime: job.time, 
+        instructions: 'Follow standard enterprise procedures.' 
+      } 
+    });
+  };
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.back}>
+        <Ionicons name="arrow-back" size={24} color={COLORS.text} />
+      </TouchableOpacity>
+      
       <Text style={styles.title}>Available Jobs</Text>
-      <Text style={styles.subtitle}>{AVAILABLE_JOBS.length} jobs near you</Text>
+      <Text style={styles.subtitle}>{AVAILABLE_JOBS.length} open jobs in your approved service areas</Text>
+
+      {!state.isOnline && (
+        <View style={styles.offlineWarning}>
+          <Ionicons name="warning-outline" size={18} color={COLORS.offline} />
+          <Text style={styles.offlineWarningText}>You are currently offline. Go online on the Home screen to accept these jobs.</Text>
+        </View>
+      )}
 
       {AVAILABLE_JOBS.map(job => (
-        <TouchableOpacity key={job.id} style={[styles.card, SHADOWS.small]} onPress={() => navigation.navigate('JobDetails', { job: { ...job, customer: 'Customer', location: job.area, status: 'new', slaTime: job.time, instructions: '' } })}>
+        <TouchableOpacity 
+          key={job.id} 
+          style={[styles.card, SHADOWS.small]} 
+          onPress={() => navigation.navigate('JobDetails', { job: { ...job, customer: 'Customer', location: job.area, status: 'new', slaTime: job.time, instructions: '' } })}
+        >
           <View style={styles.cardTop}>
             <View style={styles.typeBadge}>
               <Text style={styles.typeText}>{job.type}</Text>
@@ -51,11 +87,11 @@ export default function AvailableJobsScreen({ navigation }) {
           </View>
 
           <View style={styles.cardActions}>
-            <TouchableOpacity style={styles.acceptBtn} onPress={() => navigation.navigate('AcceptJob', { job: { ...job, customer: 'Customer', location: job.area, status: 'new', slaTime: job.time, instructions: '' } })}>
-              <Text style={styles.acceptText}>Accept</Text>
+            <TouchableOpacity style={styles.acceptBtn} onPress={() => handleAccept(job)}>
+              <Text style={styles.acceptText}>Accept Job</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.skipBtn}>
-              <Text style={styles.skipText}>Skip</Text>
+            <TouchableOpacity style={styles.skipBtn} onPress={() => navigation.goBack()}>
+              <Text style={styles.skipText}>Dismiss</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -67,8 +103,11 @@ export default function AvailableJobsScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: COLORS.background },
   content: { padding: SPACING.md, paddingTop: SPACING.xxl },
+  back: { marginBottom: SPACING.sm },
   title: { ...FONTS.title, marginBottom: SPACING.xs },
-  subtitle: { ...FONTS.small, marginBottom: SPACING.lg },
+  subtitle: { ...FONTS.small, marginBottom: SPACING.md },
+  offlineWarning: { flexDirection: 'row', gap: 8, backgroundColor: '#FDE8E8', padding: SPACING.md, borderRadius: 12, marginBottom: SPACING.md },
+  offlineWarningText: { fontSize: 12, color: COLORS.offline, flex: 1, fontWeight: '600' },
   card: { backgroundColor: COLORS.white, borderRadius: 16, padding: SPACING.md, marginBottom: SPACING.md },
   cardTop: { flexDirection: 'row', gap: SPACING.sm, marginBottom: SPACING.sm },
   typeBadge: { backgroundColor: COLORS.primaryLight, paddingVertical: 4, paddingHorizontal: 10, borderRadius: 8 },
@@ -82,7 +121,7 @@ const styles = StyleSheet.create({
   detailRow: { flexDirection: 'row', alignItems: 'center', gap: SPACING.xs, marginBottom: 4 },
   detailText: { ...FONTS.small },
   cardActions: { flexDirection: 'row', gap: SPACING.sm },
-  acceptBtn: { flex: 1, backgroundColor: COLORS.primary, paddingVertical: 12, borderRadius: 10, alignItems: 'center' },
+  acceptBtn: { flex: 1.5, backgroundColor: COLORS.primary, paddingVertical: 12, borderRadius: 10, alignItems: 'center' },
   acceptText: { color: COLORS.white, fontWeight: '700', fontSize: 14 },
   skipBtn: { flex: 1, backgroundColor: COLORS.lightGray, paddingVertical: 12, borderRadius: 10, alignItems: 'center' },
   skipText: { color: COLORS.gray, fontWeight: '600', fontSize: 14 },

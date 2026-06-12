@@ -12,14 +12,16 @@ const SECTIONS = [
   { label: 'Payout Details', status: 'Completed', icon: 'wallet-outline' },
   { label: 'Emergency Contact', status: 'Skipped', icon: 'call-outline' },
   { label: 'Availability', status: 'Completed', icon: 'calendar-outline' },
-  { label: 'Assigned Services', status: 'Completed', icon: 'construct-outline' },
+  { label: 'Service Preference', status: 'Completed', icon: 'construct-outline' },
 ];
 
 export default function SubmitApprovalScreen({ navigation }) {
   const [submitted, setSubmitted] = useState(false);
+  const { dispatch } = useApp();
 
   const handleSubmit = () => {
     setSubmitted(true);
+    dispatch({ type: 'SET_BUDDY_STATUS', payload: 'UnderReview' });
     setTimeout(() => navigation.navigate('ApprovalPending'), 1500);
   };
 

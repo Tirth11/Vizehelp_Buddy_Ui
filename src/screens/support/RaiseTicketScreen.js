@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { COLORS, FONTS, SPACING } from '../../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
+import { showAlert } from '../../utils/alert';
 
 const CATEGORIES = ['Job Issue', 'Payment Issue', 'App Bug', 'Account Issue', 'KYC Issue', 'Other'];
 
@@ -11,8 +12,8 @@ export default function RaiseTicketScreen({ navigation }) {
   const [description, setDescription] = useState('');
 
   const handleSubmit = () => {
-    if (!category || !description) return Alert.alert('Required', 'Category and description are required');
-    Alert.alert('Ticket Raised', 'Your support ticket has been submitted. Ticket ID: TKT-2001', [
+    if (!category || !description) return showAlert('Required', 'Category and description are required');
+    showAlert('Ticket Raised', 'Your support ticket has been submitted. Ticket ID: TKT-2001', [
       { text: 'OK', onPress: () => navigation.goBack() }
     ]);
   };

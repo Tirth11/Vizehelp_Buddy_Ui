@@ -24,6 +24,7 @@ import SelectServicesScreen from '../screens/registration/SelectServicesScreen';
 import SubmitApprovalScreen from '../screens/registration/SubmitApprovalScreen';
 import ApprovalPendingScreen from '../screens/registration/ApprovalPendingScreen';
 import RejectionScreen from '../screens/registration/RejectionScreen';
+import SuspendedScreen from '../screens/registration/SuspendedScreen';
 import KYCUploadScreen from '../screens/registration/KYCUploadScreen';
 import TrainingStatusScreen from '../screens/registration/TrainingStatusScreen';
 import SetServiceAreaScreen from '../screens/registration/SetServiceAreaScreen';
@@ -170,6 +171,7 @@ export default function AppNavigator() {
         <Stack.Screen name="SubmitApproval" component={SubmitApprovalScreen} />
         <Stack.Screen name="ApprovalPending" component={ApprovalPendingScreen} />
         <Stack.Screen name="Rejection" component={RejectionScreen} />
+        <Stack.Screen name="Suspended" component={SuspendedScreen} />
 
         {/* Legacy (redirects) */}
         <Stack.Screen name="KYCUpload" component={KYCUploadScreen} />

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { COLORS, FONTS, SPACING } from '../../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
+import { showAlert } from '../../utils/alert';
 
 export default function BankSettingsScreen({ navigation }) {
   const [upi, setUpi] = useState('rahul@upi');
@@ -25,7 +26,7 @@ export default function BankSettingsScreen({ navigation }) {
 
       <Text style={styles.note}>OTP verification required before saving changes.</Text>
 
-      <TouchableOpacity style={styles.btn} onPress={() => Alert.alert('Saved', 'Payment details updated', [{ text: 'OK', onPress: () => navigation.goBack() }])}>
+      <TouchableOpacity style={styles.btn} onPress={() => showAlert('Saved', 'Payment details updated', [{ text: 'OK', onPress: () => navigation.goBack() }])}>
         <Text style={styles.btnText}>Save</Text>
       </TouchableOpacity>
     </View>

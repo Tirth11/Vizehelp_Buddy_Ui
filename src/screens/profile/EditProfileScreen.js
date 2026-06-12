@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { COLORS, FONTS, SPACING } from '../../constants/theme';
 import { MOCK_USER } from '../../data/mockData';
+import { showAlert } from '../../utils/alert';
 
 export default function EditProfileScreen({ navigation }) {
   const [form, setForm] = useState({ name: MOCK_USER.name, email: MOCK_USER.email || '', address: MOCK_USER.address, language: 'English' });
 
   const handleSave = () => {
-    Alert.alert('Saved', 'Profile updated successfully', [{ text: 'OK', onPress: () => navigation.goBack() }]);
+    showAlert('Saved', 'Profile updated successfully', [{ text: 'OK', onPress: () => navigation.goBack() }]);
   };
 
   return (

@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { COLORS, FONTS, SPACING, SHADOWS } from '../../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function BackgroundCheckScreen({ navigation }) {
   const [consent, setConsent] = useState(false);
-  const [form, setForm] = useState({ firstName: '', lastName: '', dob: '', address: '', ssn4: '' });
+  const [form, setForm] = useState({ firstName: '', lastName: '', dob: '', address: '' });
+  const handleContinue = () => {
+    // Non-mandatory validation for mockup simplicity
+    navigation.navigate('TaxInformation');
+  };
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
@@ -14,8 +18,8 @@ export default function BackgroundCheckScreen({ navigation }) {
       </TouchableOpacity>
 
       <Text style={styles.step}>Step 4 of 10</Text>
-      <Text style={styles.title}>Background Check Consent</Text>
-      <Text style={styles.subtitle}>Your enterprise may require background verification before your Buddy account is approved. Please review and provide consent to continue.</Text>
+      <Text style={styles.title}>Background Check</Text>
+      <Text style={styles.subtitle}>Your enterprise requires background verification before your Buddy account is approved.</Text>
 
       <View style={styles.card}>
         <View style={styles.checkItem}>
@@ -24,15 +28,11 @@ export default function BackgroundCheckScreen({ navigation }) {
         </View>
         <View style={styles.checkItem}>
           <Ionicons name="checkmark-circle" size={22} color={COLORS.secondary} />
-          <Text style={styles.checkText}>Sex offender registry</Text>
+          <Text style={styles.checkText}>Sex offender registry check</Text>
         </View>
         <View style={styles.checkItem}>
           <Ionicons name="checkmark-circle" size={22} color={COLORS.secondary} />
-          <Text style={styles.checkText}>Motor vehicle records (if applicable)</Text>
-        </View>
-        <View style={styles.checkItem}>
-          <Ionicons name="checkmark-circle" size={22} color={COLORS.secondary} />
-          <Text style={styles.checkText}>Identity verification</Text>
+          <Text style={styles.checkText}>Identity verification check</Text>
         </View>
       </View>
 
@@ -41,7 +41,6 @@ export default function BackgroundCheckScreen({ navigation }) {
       <TextInput style={styles.input} placeholder="Legal Last Name *" value={form.lastName} onChangeText={v => setForm({ ...form, lastName: v })} />
       <TextInput style={styles.input} placeholder="Date of Birth (MM/DD/YYYY) *" value={form.dob} onChangeText={v => setForm({ ...form, dob: v })} />
       <TextInput style={styles.input} placeholder="Current Address *" value={form.address} onChangeText={v => setForm({ ...form, address: v })} />
-      <TextInput style={styles.input} placeholder="SSN Last 4 Digits (if required)" keyboardType="number-pad" maxLength={4} secureTextEntry value={form.ssn4} onChangeText={v => setForm({ ...form, ssn4: v })} />
 
       <TouchableOpacity style={styles.consentRow} onPress={() => setConsent(!consent)}>
         <Ionicons name={consent ? 'checkbox' : 'square-outline'} size={24} color={consent ? COLORS.primary : COLORS.gray} />
@@ -53,8 +52,8 @@ export default function BackgroundCheckScreen({ navigation }) {
         <Text style={styles.infoText}>Background checks typically complete within 3–5 business days. You'll be notified once approved.</Text>
       </View>
 
-      <TouchableOpacity style={[styles.btn, !consent && styles.btnDisabled]} disabled={!consent} onPress={() => navigation.navigate('TaxInformation')}>
-        <Text style={styles.btnText}>Authorize & Continue</Text>
+      <TouchableOpacity style={[styles.btn, !consent && styles.btnDisabled]} disabled={!consent} onPress={handleContinue}>
+        <Text style={styles.btnText}>I Agree and Continue</Text>
       </TouchableOpacity>
 
       <Text style={styles.legal}>By continuing, you authorize Vizehelp to conduct a background check through our third-party provider in compliance with the Fair Credit Reporting Act (FCRA).</Text>
@@ -73,7 +72,7 @@ const styles = StyleSheet.create({
   checkItem: { flexDirection: 'row', alignItems: 'center', gap: SPACING.sm },
   checkText: { ...FONTS.medium },
   label: { ...FONTS.small, fontWeight: '600', color: COLORS.darkGray, marginBottom: SPACING.sm },
-  input: { borderWidth: 1, borderColor: COLORS.border, borderRadius: 12, padding: SPACING.md, fontSize: 16, marginBottom: SPACING.md },
+  input: { borderWidth: 1, borderColor: COLORS.border, borderRadius: 12, padding: SPACING.md, fontSize: 16, marginBottom: SPACING.md, color: COLORS.text },
   consentRow: { flexDirection: 'row', alignItems: 'flex-start', gap: SPACING.sm, marginVertical: SPACING.md },
   consentText: { ...FONTS.regular, flex: 1 },
   info: { flexDirection: 'row', alignItems: 'flex-start', gap: SPACING.sm, backgroundColor: COLORS.primaryLight, padding: SPACING.md, borderRadius: 12, marginBottom: SPACING.xl },

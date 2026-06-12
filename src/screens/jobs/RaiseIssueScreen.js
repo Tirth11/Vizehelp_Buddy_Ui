@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
 import { COLORS, FONTS, SPACING } from '../../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
+import { showAlert } from '../../utils/alert';
 
-const CATEGORIES = ['Customer unavailable', 'Wrong address', 'Unsafe location', 'Payment issue', 'Service mismatch', 'App issue', 'Other'];
+const CATEGORIES = ['Customer not available', 'Wrong address', 'Unsafe location', 'Cannot complete task', 'Payment issue', 'App issue', 'Emergency', 'Other'];
 
 export default function RaiseIssueScreen({ navigation }) {
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
 
   const handleSubmit = () => {
-    if (!category) return Alert.alert('Required', 'Select an issue category');
-    Alert.alert('Submitted', 'Issue raised successfully. Support will contact you.', [{ text: 'OK', onPress: () => navigation.goBack() }]);
+    if (!category) return showAlert('Required', 'Select an issue category');
+    showAlert('Submitted', 'Issue raised successfully. Support will contact you.', [{ text: 'OK', onPress: () => navigation.goBack() }]);
   };
 
   return (

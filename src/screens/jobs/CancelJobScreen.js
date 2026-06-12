@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { COLORS, FONTS, SPACING } from '../../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
+import { showAlert } from '../../utils/alert';
 
 const REASONS = ['Customer unavailable', 'Personal emergency', 'Vehicle breakdown', 'Wrong job assigned', 'Safety concern', 'Other'];
 
@@ -9,8 +9,8 @@ export default function CancelJobScreen({ navigation, route }) {
   const [reason, setReason] = useState('');
 
   const handleCancel = () => {
-    if (!reason) return Alert.alert('Required', 'Please select a cancellation reason');
-    Alert.alert('Cancelled', 'Job has been cancelled.', [{ text: 'OK', onPress: () => navigation.navigate('MainTabs') }]);
+    if (!reason) return showAlert('Required', 'Please select a cancellation reason');
+    showAlert('Cancelled', 'Job has been cancelled.', [{ text: 'OK', onPress: () => navigation.navigate('MainTabs') }]);
   };
 
   return (

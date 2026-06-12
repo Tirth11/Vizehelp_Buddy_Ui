@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { COLORS, FONTS, SPACING } from '../../constants/theme';
+import { showAlert } from '../../utils/alert';
 
 export default function ServiceExtensionScreen({ navigation }) {
   const [reason, setReason] = useState('');
@@ -8,8 +9,8 @@ export default function ServiceExtensionScreen({ navigation }) {
   const [charges, setCharges] = useState('');
 
   const handleSubmit = () => {
-    if (!reason) return Alert.alert('Required', 'Please provide a reason');
-    Alert.alert('Submitted', 'Extension request sent for customer approval.', [{ text: 'OK', onPress: () => navigation.goBack() }]);
+    if (!reason) return showAlert('Required', 'Please provide a reason');
+    showAlert('Submitted', 'Extension request sent for customer approval.', [{ text: 'OK', onPress: () => navigation.goBack() }]);
   };
 
   return (

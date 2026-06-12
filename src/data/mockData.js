@@ -19,7 +19,7 @@ export const MOCK_USER = {
 export const MOCK_JOBS = [
   {
     id: 'JOB-1001',
-    type: 'EV Charging',
+    type: 'EV Charging Support',
     customer: 'Sarah M.',
     location: '2100 McKinney Ave, Dallas, TX',
     distance: '2.1 mi',
@@ -65,6 +65,30 @@ export const MOCK_JOBS = [
     status: 'cancelled',
     cancelReason: 'Customer unavailable',
   },
+  {
+    id: 'JOB-1005',
+    type: 'Senior Buddy Support',
+    customer: 'Mildred T.',
+    location: '3200 Oak Lawn Ave, Dallas, TX',
+    distance: '1.2 mi',
+    earning: 60,
+    duration: '1.5 hrs',
+    status: 'rejected',
+    rejectReason: 'Too far',
+    instructions: 'Assistance with light grocery shopping and companion walk.',
+  },
+  {
+    id: 'JOB-1006',
+    type: 'EV Laundry & Detailing',
+    customer: 'David L.',
+    location: '2900 N Harwood St, Dallas, TX',
+    distance: '2.5 mi',
+    earning: 95,
+    duration: '2 hrs',
+    status: 'issue',
+    issueType: 'Customer not available',
+    instructions: 'Exterior detailing and internal vaccuuming. Charger plug assistance.',
+  }
 ];
 
 export const MOCK_EARNINGS = {
