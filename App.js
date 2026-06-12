@@ -11,7 +11,7 @@ export default function App() {
     ...Ionicons.font,
   });
 
-  if (!fontsLoaded) {
+  if (!fontsLoaded && Platform.OS !== 'web') {
     return <View style={{ flex: 1 }} />;
   }
 
