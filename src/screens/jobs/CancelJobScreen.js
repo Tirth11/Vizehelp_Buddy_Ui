@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { COLORS, FONTS, SPACING } from '../../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { showAlert } from '../../utils/alert';
